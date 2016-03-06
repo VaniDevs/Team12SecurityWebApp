@@ -12,12 +12,16 @@ html
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
   body
     #frontPage
-      .center-div(style='text-align:center')
-        p(style='font-size:5em; color: #474747; font-family:helvetica;') Security
-        div(style='display:inline-block; width:100px;')
-        .btn-group.text-center(style='position:relative; left:-45px;')
-          a.btn.btn-default(href='/map') Map
-      .center-div
+      .jumbotron
+        .center-div(style='text-align:center')
+          p(style='font-size:3em; color: #474747 ; font-family:candara;')
+            span.glyphicon.glyphicon-console(aria-hidden='true')
+            |  DWABIT SECURITY CENTRAL
+          div(style='display:inline-block; width:100px;')
+      footer.row-footer
+        .col-xs-12.col-sm-push-5
+          h3 TODAY'S CASES
+          p(style='padding:15px;')
     .col-md-6
       ul#users.list-group
         // Users added here by JS
@@ -35,8 +39,8 @@ html
       function userHtmlFromObject(snapshot, user) {
       console.log( snapshot );
       var html = '';
-      html += '<div class="col-md-4">';
-      html += '<div class="panel panel-default" id="userItem">';
+      html += '<div class="col-xs-12 col-sm-4 col-sm-push-6">';
+      html += '<div class="panel panel-info" id="userItem">';
       html += '<div class="panel-heading">'
       html += '<h3 class="panel-title"><h3 class="panel-title"><a href="/users/'+snapshot.key()+'">'+snapshot.key()+'</a></h3></div>'
       html += ' <div class="panel-body">'
