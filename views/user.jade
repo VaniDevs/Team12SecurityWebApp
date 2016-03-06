@@ -2,7 +2,8 @@ html
   head
     script(src='https://cdn.firebase.com/js/client/2.2.1/firebase.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
-    script(src='https://maps.googleapis.com/maps/api/js?callback=initMap&sensor=false', async='', defer='')
+    script(src='https://maps.googleapis.com/maps/api/js?callback=initMap', async='', defer='')
+    | ​
     link(rel='stylesheet', type='text/css', href='/resources/tutorial/css/example.css')
     // Latest compiled and minified CSS
     link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
@@ -24,6 +25,7 @@ html
               p.navbar-text Case#: 103
         // /.navbar-collapse
       // /.container-fluid
+    | ​
     nav.navbar.navbar-default
       .container-fluid
         // Collect the nav links, forms, and other content for toggling
@@ -49,6 +51,7 @@ html
         img(src='http://i.imgur.com/w56k0Ag.jpg', style='width:90px; height:90px')
         ul#users.list-group
           // Users added here by JS
+      | ​
       #outerWrapRight
         #victimWrap(style='background-color: #666060')
           p#victim Suspect Info
@@ -59,6 +62,7 @@ html
             b
               p#suspect Andy Wong
             p Male, 20
+        | ​
         #rowImages
           button#assaults.btn.btn-primary(type='button')
             | Assaults 
@@ -70,10 +74,11 @@ html
           #gun Gun Access: True
           #plate License Plate
         center
+          p(style='padding:10px;')
           p#incidentHistory(style='color:#665454; font-size:20px') Incident History
         #rowHistory
           div
-            button#resOrder.btn.btn-default(type='button')
+            button#resOrder.button(class='type=', type='button')
               | Restraining Order 
               span.badge Read More
           br
@@ -86,14 +91,17 @@ html
             button#resOrder.btn.btn-default(type='button')
               | Verbal Abuse 
               span.badge Read More
-            br
+            p(style='padding:15px;')
       // outsideWrapper
+    | ​
     br
     br
     // sd
-    #slideshow
-      div
-        img#images
+    #photos
+      #images
+        img.photo
+    | ​
+    | ​
     script.
       var userList = [];
       var imageList = [];
@@ -138,7 +146,7 @@ html
       function imageHtmlFromObject(snapshot, user) {
       console.log( snapshot );
       var html = '';
-      html += '<img style="width: 350px; height: 350px" src="data:image/png;base64,'+user.image+'">';
+      html += '<img class="photo" style="width: 350px; height: 350px" class="image-responsive" src="data:image/png;base64,'+user.image+'"/>';
       return html;
       }
       function initMap() {
@@ -201,7 +209,7 @@ html
     height: 30px;
     }
     #victimInfo {
-    width: 500px;
+    width: 000px;
     }
     #imagesList {
     position:relative;
@@ -217,7 +225,7 @@ html
     }
     #outerWrap, #outerWrapRight{
     width: 400px;
-    height: 550px;
+    height: 520px;
     border-radius: 10px;
     background-color: #ffffff;
     border: solid 2px #e8e8e8;
@@ -236,7 +244,7 @@ html
     font-size:25px;
     }
     #rowHistory {
-    width:400px;
+    width:300px;
     }
     #resOrder {
     width:400px;
@@ -244,18 +252,20 @@ html
     #code {
     font-size:30px;
     }
-    #slideshow {
-    margin: 50px auto;
-    position: relative;
-    width: 240px;
-    height: 240px;
-    padding: 10px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    #photos{
+    height:530px;
+    width:200%;
+    padding:10px 0;
+    background-color:#fafafa;
+    overflow-x: scroll;
+    overflow-y: hidden;
     }
-    #slideshow > div {
-    position: absolute;
-    top: 10px;
-    left: 10px;
-    right: 10px;
-    bottom: 10px;
+    #photos div {
+    width:100000000000px;
+    }
+    img.photo{
+    border:10px solid #fff;
+    float:left;
+    display:inline;
+    margin-right:5px;
     }
