@@ -2,7 +2,7 @@ html
   head
     script(src='https://cdn.firebase.com/js/client/2.2.1/firebase.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
-    script(src='https://maps.googleapis.com/maps/api/js?callback=initMap&sensor=false', async='', defer='')
+    script(src='https://maps.googleapis.com/maps/api/js?callback=initMap', async='', defer='')
     link(rel='stylesheet', type='text/css', href='/resources/tutorial/css/example.css')
     // Latest compiled and minified CSS
     link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
@@ -12,14 +12,14 @@ html
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
     // Latest compiled JavaScript
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
-  body(onload='initMap()')
+  body
     nav.navbar.navbar-default
       .container-fluid
         // Collect the nav links, forms, and other content for toggling
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
             li
-              a(href='/') Back
+              a(href='/users/Meryl') Back
             b
               p.navbar-text Case#: 103
         // /.navbar-collapse
@@ -30,13 +30,14 @@ html
         #bs-example-navbar-collapse-1.collapse.navbar-collapse
           ul.nav.navbar-nav
             b
-              p#code Security Code: V5X4
+              p.navbar-text Send case to police
+          form.navbar-form.navbar-left(role='search')
+            .form-group
+              input.form-control(type='text', placeholder='Search for Operator')
+            button.btn.btn-default(type='submit') Submit
           ul.nav.navbar-nav.navbar-right
             li
-              button#callPolice.btn.btn-danger.navbar-btn
-                a(style='color: #fff', href='/user/police') Call Police
-            li
-              button#closeCase.btn.btn-success.navbar-btn Close Case
+              button#closeCase.btn.btn-success.navbar-btn Send Case
         // /.navbar-collapse
       // /.container-fluid
     // Page Content
@@ -156,6 +157,15 @@ html
       title: 'Hello World!'
       });
       }
+      $("#slideshow > div:gt(0)").hide();
+      setInterval(function() {
+      $('#slideshow > div:first')
+      .fadeOut(1000)
+      .next()
+      .fadeIn(1000)
+      .end()
+      .appendTo('#slideshow');
+      },  3000);
   // START CSS
   style(type='text/css').
     html {

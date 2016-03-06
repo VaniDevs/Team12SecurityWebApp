@@ -36,6 +36,7 @@ html
       console.log('added', snapshot.key());
       $('#users').append(userHtmlFromObject(snapshot, snapshot.val()));
       });
+      
       function userHtmlFromObject(snapshot, user) {
       console.log( snapshot );
       var html = '';

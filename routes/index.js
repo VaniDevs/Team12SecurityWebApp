@@ -15,8 +15,8 @@ router.get('/users/:id', function(req, res, next) {
 
 });
 
-router.get('/user', function(req, res, next) {
-	res.render('user', { title: 'Meryl'});
+router.get('/user/police', function(req, res, next) {
+	res.render('userpolice', { title: 'Call Police'});
 });
 
 module.exports = router;
