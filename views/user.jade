@@ -2,6 +2,7 @@ html
   head
     script(src='https://cdn.firebase.com/js/client/2.2.1/firebase.js')
     script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
+    script(src='https://maps.googleapis.com/maps/api/js?callback=initMap', async='', defer='')
     link(rel='stylesheet', type='text/css', href='/resources/tutorial/css/example.css')
     // Latest compiled and minified CSS
     link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
@@ -11,64 +12,249 @@ html
     // Latest compiled JavaScript
     script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
   body
-    #frontPage
-      .center-div(style='text-align:center')
-        p(style='font-size:5em; color: #474747; font-family:helvetica;') Security
-        div(style='display:inline-block; width:100px;')
-        .btn-group.text-center(style='position:relative; left:-45px;')
-          a.btn.btn-default(href='/map') Map
-      .center-div
-    .col-md-6
-      ul#images.list.group
-    .col-md-6
-      ul#users.list-group
-        // Users added here by JS
+    nav.navbar.navbar-default
+      .container-fluid
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            li
+              a(href='/') Back
+            b
+              p.navbar-text Case#: 103
+        // /.navbar-collapse
+      // /.container-fluid
+    nav.navbar.navbar-default
+      .container-fluid
+        // Collect the nav links, forms, and other content for toggling
+        #bs-example-navbar-collapse-1.collapse.navbar-collapse
+          ul.nav.navbar-nav
+            b
+              p#code Security Code: V5X4
+          ul.nav.navbar-nav.navbar-right
+            li
+              button#callPolice.btn.btn-danger.navbar-btn Call Police
+            li
+              button#closeCase.btn.btn-success.navbar-btn Close Case
+        // /.navbar-collapse
+      // /.container-fluid
+    // Page Content
+    #row
+      #outerWrap
+        #victimWrap
+          p#victim Victim
+        #map(style='width:400px;height:186px;')
+        br
+        img(src='http://i.imgur.com/w56k0Ag.jpg', style='width:90px; height:90px')
+        ul#users.list-group
+          // Users added here by JS
+      #outerWrapRight
+        #victimWrap(style='background-color: #666060')
+          p#victim Suspect Info
+        br
+        #rowSuspect
+          img#andy(src='http://i.imgur.com/CfkhS2F.jpg', style='width:90px; height:90px')
+          #namespace
+            b
+              p#suspect Andy Wong
+            p Male, 20
+        #rowImages
+          button#assaults.btn.btn-primary(type='button')
+            | Assaults 
+            span.badge 4
+          img#gun(style='width:70px; height:70px', src='http://media.cmgdigital.com/shared/img/photos/2015/07/01/27/ae/gun-image.jpg')
+          img#plate(style='width:90px; height:40px', src='http://www.plateshack.com/y2k/British_Columbia2/bc2013-777PRX.jpg')
+        #rowLabels
+          #assults Assault
+          #gun Gun Access: True
+          #plate License Plate
+        center
+          p#incidentHistory(style='color:#665454; font-size:20px') Incident History
+        #rowHistory
+          div
+            button#resOrder.btn.btn-default(type='button')
+              | Restraining Order 
+              span.badge Read More
+          br
+          div
+            button#resOrder.btn.btn-default(type='button')
+              | Physical Assault 
+              span.badge Read More
+          br
+          div
+            button#resOrder.btn.btn-default(type='button')
+              | Verbal Abuse 
+              span.badge Read More
+            br
+      // outsideWrapper
+    br
+    br
+    // sd
+    #imagesList
+      ul.images
+        li#images
     script.
       var userList = [];
       var imageList = [];
       // CREATE A REFERENCE TO FIREBASE
-      var userRef = new Firebase('https://dwabit.firebaseio.com/');
       var userInfo = new Firebase('https://dwabit.firebaseio.com/UserInfo/');
       var userImages = new Firebase('https://dwabit.firebaseio.com/DistressImages/Meryl/');
+      var userlat;
+      var userlng;
       userInfo.on("child_added", function(snapshot) {
       console.log('added', snapshot.key());
       userList.push(snapshot.key());
+      var attributes = snapshot.val();
       for (var i = 0; i < userList.length; i++) {
       if (userList[i] === 'Meryl') {
       $('#users').append(userHtmlFromObject(snapshot, snapshot.val()));
+      userlat = Number(attributes.latitude);
+      userlng = Number(attributes.longitude);
+      console.log(userlat, userlng);
       }
       }
       });
       userImages.on('child_added', function(snapshot) {
       console.log('added', snapshot.key());
       imageList.push(snapshot.key());
-      for (var i = 0; i < imageList.length; i++) {
+      // for (var i = 0; i < imageList.length; i++) {
       // if (imageList[i] === 'Meryl') {
       $('#images').append(imageHtmlFromObject(snapshot, snapshot.val()));
       // }
-      }
-      })
+      });
       function userHtmlFromObject(snapshot, user) {
       console.log( snapshot );
       var html = '';
-      html += '<div class="col-md-4">';
-      html += '<div class="panel panel-default" id="userItem">';
-      html += '<div class="panel-heading">'
-      html += '<h7 class="panel-title"><h3 class="panel-title">'+snapshot.key()+'</h7></div>'
-      html += ' <div class="panel-body">'
-      html += '<p id="name">'+user.name+'</p>'
-      html += '<p id="address">'+user.address+'</p>'
-      html += '<p id="age">'+user.age+'</p>'
-      html += '<p id="gender">'+user.gender+'</p>'
-      html += '<p id="phone">'+user.phone+'</p>'
-      html += '<p id="sin">'+user.sin+'</p>'
-      html += '</div></div></div>';
+      html += '<p id="userName"><b>'+snapshot.key()+'</b></p>'
+      html += '<p id="address">Address: '+user.address+'</p>'
+      html += '<p id="age">Age: '+user.age+'</p>'
+      html += '<p id="gender">Gender: '+user.gender+'</p>'
+      html += '<p id="phone">Phone Number: '+user.phone+'</p>'
+      html += '<p id="sin">Sin: '+user.sin+'</p>'
+      html += '';
       return html;
       }
       function imageHtmlFromObject(snapshot, user) {
       console.log( snapshot );
       var html = '';
-      html += '<p id="name">'+snapshot.key()+'</p>'
-      html += '<img src="data:image/png;base64,'+user.image+'">';
+      html += '<br><img style="width: 350px; height: 350px" class="image-responsive" src="data:image/png;base64,'+user.image+'"><br>';
       return html;
       }
+      function initMap() {
+      var myLatLng = {
+      lat: 49.26408492071408,
+      lng: -123.1044989793409
+      };
+      var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 8,
+      center: myLatLng
+      });
+      var marker = new google.maps.Marker({
+      position: myLatLng,
+      map: map,
+      title: 'Hello World!'
+      });
+      }
+  // START CSS
+  style(type='text/css').
+    html {
+    padding: 0;
+    margin:0;
+    }
+    body{
+    font-family:helvetica;
+    background-image: url(../images/bg1.jpg);
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    text-align: center;
+    }
+    #row {
+    width:1005px;
+    margin: 0 auto;
+    }
+    .userItem {
+    min-height: 150px;
+    width: 700px;
+    }
+    #frontPage {
+    padding: 30px 0 10px 0;
+    }
+    .center-div {
+    margin: 0 auto;
+    width: 100%;
+    }
+    .centerBlock {
+    display: table;
+    margin: 0 auto;
+    }
+    .thumbnail {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    }
+    a > a {
+    color: black !important;
+    text-decoration: none !important;
+    }
+    input {
+    height: 30px;
+    }
+    #victimInfo {
+    width: 500px;
+    }
+    #imagesList {
+    position:relative;
+    margin-left:150px;
+    height:500px;
+    }
+    #holdImages{
+    }
+    ul.images {
+    margin: 0;
+    padding: 0;
+    white-space: nowrap;
+    width: 900px;
+    overflow-x: auto;
+    background-color: #ddd;
+    }
+    ul.images li {
+    display: inline;
+    width: 150px;
+    height: 550px;
+    float: left;
+    }
+    #victimWrap {
+    width: 400px;
+    height: 37px;
+    border-radius: 5px;
+    background-color: #ecb81d;
+    border: solid 1px #f3f3f3;
+    }
+    #outerWrap, #outerWrapRight{
+    width: 400px;
+    height: 550px;
+    border-radius: 10px;
+    background-color: #ffffff;
+    border: solid 2px #e8e8e8;
+    margin-left:50px;
+    float: left;
+    }
+    #gun, #plate, #assults, #rowText, #rowLabels {
+    margin-left:25px;
+    display: inline-block;
+    }
+    #userName, #suspect {
+    font-size:20px;
+    }
+    #victim {
+    color: #fff;
+    font-size:25px;
+    }
+    #rowHistory {
+    width:400px;
+    }
+    #resOrder {
+    width:400px;
+    }
+    #code {
+    font-size:30px;
+    }

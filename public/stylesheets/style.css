@@ -1,8 +1,99 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html {
+	padding: 0;
+    margin:0;
 }
 
-a {
-  color: #00B7FF;
+body{
+font-family:helvetica;
+background-image: url(../images/bg1.jpg);
+background-size: 100% 100%;
+background-repeat: no-repeat;
+background-position: center;
+text-align: center;
 }
+
+#row {
+    display: inline-block;
+}
+
+#profileImg {
+    float: left;
+}
+#name {
+    font-size: 20px;
+    float: right;
+}
+
+
+.userItem {
+  min-height: 150px;
+  width: 700px;
+}
+
+    #frontPage {
+        padding: 30px 0 10px 0;
+    }
+    .center-div {
+        margin: 0 auto;
+        width: 100%;
+    }
+    .centerBlock {
+        display: table;
+        margin: 0 auto;
+    }
+    .thumbnail {
+        margin-top: 30px;
+        margin-bottom: 10px;
+    }
+    a > a {
+        color: black !important;
+        text-decoration: none !important;
+    }
+    input {
+        height: 30px;
+    }
+
+#victimInfo {
+    width: 500px;
+}
+
+#imagesList {
+}
+#holdImages{
+}
+
+ul.images {
+  margin: 0;
+  padding: 0;
+  white-space: nowrap;
+  width: 900px;
+  overflow-x: auto;
+  background-color: #ddd;
+}
+
+ul.images li {
+  display: inline;
+  width: 150px;
+  height: 150px;
+  float: left;
+}
+
+#victimWrap {
+  width: 400px;
+  height: 37px;
+  border-radius: 5px;
+  background-color: #ecb81d;
+  border: solid 1px #f3f3f3;
+}
+
+#outerWrap {
+  width: 400px;
+  height: 550px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  border: solid 1px #e8e8e8;
+}
+
+
+
+
