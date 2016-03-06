@@ -1,0 +1,74 @@
+html
+  head
+    script(src='https://cdn.firebase.com/js/client/2.2.1/firebase.js')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js')
+    link(rel='stylesheet', type='text/css', href='/resources/tutorial/css/example.css')
+    // Latest compiled and minified CSS
+    link(rel='stylesheet', href='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css')
+    link(rel='stylesheet', type='text/css', href='css/main.css')
+    // jQuery library
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js')
+    // Latest compiled JavaScript
+    script(src='http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js')
+  body
+    #frontPage
+      .center-div(style='text-align:center')
+        p(style='font-size:5em; color: #474747; font-family:helvetica;') Security
+        div(style='display:inline-block; width:100px;')
+        .btn-group.text-center(style='position:relative; left:-45px;')
+          a.btn.btn-default(href='/map') Map
+      .center-div
+    .col-md-6
+      ul#images.list.group
+    .col-md-6
+      ul#users.list-group
+        // Users added here by JS
+    script.
+      var userList = [];
+      var imageList = [];
+      // CREATE A REFERENCE TO FIREBASE
+      var userRef = new Firebase('https://dwabit.firebaseio.com/');
+      var userInfo = new Firebase('https://dwabit.firebaseio.com/UserInfo/');
+      var userImages = new Firebase('https://dwabit.firebaseio.com/DistressImages/Meryl/');
+      userInfo.on("child_added", function(snapshot) {
+      console.log('added', snapshot.key());
+      userList.push(snapshot.key());
+      for (var i = 0; i < userList.length; i++) {
+      if (userList[i] === 'Meryl') {
+      $('#users').append(userHtmlFromObject(snapshot, snapshot.val()));
+      }
+      }
+      });
+      userImages.on('child_added', function(snapshot) {
+      console.log('added', snapshot.key());
+      imageList.push(snapshot.key());
+      for (var i = 0; i < imageList.length; i++) {
+      // if (imageList[i] === 'Meryl') {
+      $('#images').append(imageHtmlFromObject(snapshot, snapshot.val()));
+      // }
+      }
+      })
+      function userHtmlFromObject(snapshot, user) {
+      console.log( snapshot );
+      var html = '';
+      html += '<div class="col-md-4">';
+      html += '<div class="panel panel-default" id="userItem">';
+      html += '<div class="panel-heading">'
+      html += '<h7 class="panel-title"><h3 class="panel-title">'+snapshot.key()+'</h7></div>'
+      html += ' <div class="panel-body">'
+      html += '<p id="name">'+user.name+'</p>'
+      html += '<p id="address">'+user.address+'</p>'
+      html += '<p id="age">'+user.age+'</p>'
+      html += '<p id="gender">'+user.gender+'</p>'
+      html += '<p id="phone">'+user.phone+'</p>'
+      html += '<p id="sin">'+user.sin+'</p>'
+      html += '</div></div></div>';
+      return html;
+      }
+      function imageHtmlFromObject(snapshot, user) {
+      console.log( snapshot );
+      var html = '';
+      html += '<p id="name">'+snapshot.key()+'</p>'
+      html += '<img src="data:image/png;base64,'+user.image+'">';
+      return html;
+      }
